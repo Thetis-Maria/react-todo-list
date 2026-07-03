@@ -1,0 +1,82 @@
+/*Shared CSS for authentication pages*/
+
+/* SignUp Container */
+.auth-container {
+  width: 100%;
+  max-width: 1000px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 75px;
+  box-shadow: 0 8px 32px rgba(40, 50, 90, 0.12);
+  margin-bottom: 60px;
+  margin-top: 60px;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 35px;
+  text-align: center;
+  color: hsl(235, 83%, 12%);
+}
+
+/* Input field for email and password */
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="username"] {
+  padding: 12px 48px;
+  font-size: 15px;
+  text-align: left;
+  border: 1.5px solid #d5d9e6;
+  border-radius: 10px;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  margin-bottom: 20px;
+}
+
+.input-group input[type="email"]:focus,
+.input-group input[type="password"]:focus {
+  border-color: #4c6ef5;
+  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.15);
+}
+
+/*Main action button (Login /SignUo)*/
+.auth-button {
+  padding: 12px 14px;
+  background-color: hsl(235, 87%, 59%);
+  color: white;
+  transition: box-shadow 0.2s;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.auth-button:hover {
+  background-color: hsl(250, 67%, 36%);
+  box-shadow: 0 8px 32px rgba(76, 110, 245, 0.5);
+}
+
+/* Success message shown after successful login/signup */
+.success {
+  position: center;
+  top: 20px;
+  right: 20px;
+  background-color: rgb(206, 204, 204);
+  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.15);
+  color: rgb(39, 37, 37);
+  padding: 12px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease;
+}
+
+/* Animation: the success message slides in from the right while fading in */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
