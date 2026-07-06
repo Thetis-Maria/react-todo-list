@@ -12,7 +12,7 @@
 h1 {
   font-size: 60px;
   text-align: center;
-  color: hsl(237, 90%, 4%);
+  color: hsl(0, 7%, 94%)
 }
 
 .date {
@@ -96,12 +96,12 @@ h1 {
 .add-button {
   padding: 12px 14px;
   margin-left: 10px;
-  background-color: hsl(235, 87%, 59%);
+  background-color:#5987f2;
   color: white;
   transition: box-shadow 0.2s;
 }
 .add-button:hover {
-  background-color: hsl(250, 67%, 36%);
+  background-color:#336df4;
   box-shadow: 0 8px 32px rgba(76, 110, 245, 0.5);
 }
 
@@ -118,12 +118,12 @@ h1 {
 
 .checkbox-button.pending {
   border: 2px solid red;
-  background-color: #ffe3e3; /* όλο μπλε */
+  background-color: #ffe3e3; 
 }
 
 .checkbox-button.completed {
   border: 2px solid hsl(235, 87%, 59%);
-  background-color: hsl(236, 70%, 84%); /* όλο μπλε */
+  background-color: hsl(236, 70%, 84%);
   color: white;
 }
 
@@ -161,7 +161,7 @@ h1 {
 .clear-completed-button {
   padding: 6px 12px;
   font-size: 14px;
-  background-color: hsl(235, 87%, 59%);
+  background-color: #5987f2;
   color: white;
   transition: box-shadow 0.2s;
   margin-top: 10px;
@@ -169,19 +169,19 @@ h1 {
 }
 
 .clear-completed-button:hover {
-  background-color: hsl(250, 67%, 36%);
+  background-color: #336df4;
   box-shadow: 0 8px 32px rgba(76, 110, 245, 0.5);
 }
 
 .logout-button {
   padding: 14px 20px;
   margin-left: 10px;
-  background-color: hsl(235, 87%, 59%);
+  background-color: #5987f2;
   color: white;
   transition: box-shadow 0.2s;
 }
 
 .logout-button:hover {
-  background-color: hsl(250, 67%, 36%);
+  background-color: #336df4;
   box-shadow: 0 8px 32px rgba(76, 110, 245, 0.5);
 }
