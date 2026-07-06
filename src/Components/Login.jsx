@@ -1,18 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Auth.css";
 import React, { useState } from "react";
 
 function Login() {
-  const [users, setUsers] = useState([
-    {
-      email: "thetis",
-      password: "111",
-    },
-    {
-      email: "tasos",
-      password: "222",
-    },
-  ]);
+  //Load registered users, same users key that SignUp writes to 
+  const [users] = useState(() => {
+    const saved = localStorage.getItem("users");
+    const users = saved ? JSON.parse(saved) : [];
+    return users;
+  });
 
   //Controlled input states: they hold whatever the user types
   const [newEmail, setNewEmail] = useState("");
@@ -63,6 +59,15 @@ function Login() {
       setError("");
       setSuccess("Account logged in successfully!");
 
+      //Save the session: ToDoList reads this to know who is logged in 
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({
+          username: foundUser.username,
+          email: foundUser.email,
+        }),
+      );
+
       setTimeout(() => {
         navigate("/todo");
       }, 2000);
@@ -81,7 +86,7 @@ function Login() {
       {/*Card containing the login form*/}
       <div className="auth-container">
         <div className="login-header">
-          <h1 className="login-title">Login</h1>
+          <h2 className="login-title">Login</h2>
         </div>
 
         {/* Credentials inputs */}
@@ -117,9 +122,9 @@ function Login() {
 
         {/* Link to the sign up page for users without an account*/}
         <div className="login-footer">
-          <a href="/signup" className="login-link">
+          <Link to="/signup" className="login-link">
             Don't have an account? Sign up
-          </a>
+          </Link>
         </div>
       </div>
     </div>

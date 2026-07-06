@@ -2,7 +2,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(160deg, #eef1f8 0%, #dfe4f2 100%);
+  background: linear-gradient(160deg, #dfe4f2 0%, #c5d2f1 100%);
   font-family: "Arial", sans-serif;
   display: flex;
   justify-content: center;
@@ -26,4 +26,11 @@ button {
   font-size: 16px;
   margin-top: 8px;
   text-align: left;
+}
+
+h2 {
+  margin-top: 0px;
+  font-size: 40px;
+  text-align: center;
+  color: black;
 }

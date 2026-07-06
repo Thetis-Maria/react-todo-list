@@ -1,19 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Auth.css";
 import React, { useState } from "react";
 
 function SignUp() {
-  const [users, setUsers] = useState([
-    {
-      username: "thetis",
-      email: "thetis",
-      password: "111",
-    },
-    {
-      email: "tasos",
-      password: "222",
-    },
-  ]);
+
+  //Load registered users from localStorage or empty list on first visit
+  const [users, setUsers] = useState(() => {
+    const saved = localStorage.getItem("users");
+    const users = saved ? JSON.parse(saved) : [];
+    return users;
+  });
 
   //Controlled input states, hold whatever the user types
   const [newUsername, setNewUsername] = useState("");
@@ -43,65 +39,67 @@ function SignUp() {
     //Duplicate check: Look for an existing user with the same email
     const foundUser = users.find((u) => u.email === newEmail);
 
+    //Validation checks and return on the first failure
+
+    //Username must not be empty
+    if (newUsername.trim() === "") {
+      setError("Username is required.");
+      return;
+    }
+
+    //Email must not be empty and it must match the basic pattern example@example.example
+    if (newEmail.trim() === "") {
+      setError("Email is required.");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(newEmail)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    //Password must be at least 8 characters long, have no whitespaces and contain both letters and numbers
+    if (newPassword.trim().length < 8) {
+      setError("Password has to contain at least 8 characters.");
+      return;
+    }
+    if (/\s/.test(newPassword.trim())) {
+      setError("Password must not contain whitespaces.");
+      return;
+    }
+    if (!/[a-zA-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+      setError("Password must contain both letters and numbers.");
+      return;
+    }
+
     if (foundUser) {
       //Return and error show when user already exists
       setError("User already exists. Please login.");
       return;
-    } else {
-      //Validation checks and return on the first failure
-
-      //Username must not be empty
-      if (newUsername.trim() === "") {
-        setError("Username is required.");
-        return;
-      }
-
-      //Email must not be empty and it must match the basic pattern example@example.example
-      if (newEmail.trim() === "") {
-        setError("Email is required.");
-        return;
-      }
-      if (!/\S+@\S+\.\S+/.test(newEmail)) {
-        setError("Please enter a valid email address.");
-        return;
-      }
-
-      //Password must be at least 8 characters long, have no whitespaces and contain both letters and numbers
-      if (newPassword.trim().length < 8) {
-        setError("Password has to contain at least 8 characters.");
-        return;
-      }
-      if (/\s/.test(newPassword.trim())) {
-        setError("Password must not contain whitespaces.");
-        return;
-      }
-      if (!/[a-zA-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
-        setError("Password must contain both letters and numbers.");
-        return;
-      }
-
-      //All checks passed- account is created
-      setError("");
-      const newUser = {
-        username: newUsername,
-        email: newEmail,
-        password: newPassword,
-      };
-
-      //Success message
-      setSuccess("Account created successfully! Redirecting to login...");
-      setUsers([...users, newUser]);
-
-      //After 2 sec navigate to login
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
     }
+
+    //All checks passed- account is created
+    setError("");
+    const newUser = {
+      username: newUsername,
+      email: newEmail,
+      password: newPassword,
+    };
+
+    //Save the full updated list back to localStorage
+    localStorage.setItem("users", JSON.stringify([...users, newUser]));
+
+    //Success message
+    setSuccess("Account created successfully! Redirecting to login...");
 
     //Clear the input fields
     setNewUsername("");
     setNewEmail("");
     setNewPassword("");
+
+    //After 2 sec navigate to login
+    setTimeout(() => {
+      navigate("/login");
+    }, 2000);
   }
 
   return (
@@ -112,7 +110,7 @@ function SignUp() {
       {/*Card containing the sign up form*/}
       <div className="auth-container">
         <div className="signup-header">
-          <h1 className="signup-title">Sign Up</h1>
+          <h2 className="signup-title">Sign Up</h2>
         </div>
 
         {/*Username input */}
@@ -159,9 +157,9 @@ function SignUp() {
 
         {/*Link to the login page for existing users */}
         <div className="signup-footer">
-          <a href="/login" className="signup-link">
+          <Link to="/login" className="signup-link">
             Already have an account? Log in{" "}
-          </a>
+          </Link>
         </div>
       </div>
     </div>

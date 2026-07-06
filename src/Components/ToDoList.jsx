@@ -1,32 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ToDoList.css";
 
 function ToDoList() {
-  //Main state: the array of task obejects
-  // Each task has: id (unique), title, description,
-  // completed (boolean) and createdAt (Date, used for sorting).
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Example Task 1",
-      description: "Task 1 Description",
-      completed: false,
-      createdAt: new Date("2026-07-01T10:00:00"),
-    },
-    {
-      id: 2,
-      title: "Example Task 2",
-      description: "Task 2 Description",
-      completed: true,
-      createdAt: new Date("2026-07-01T12:00:00"),
-    },
-  ]);
+  const navigate = useNavigate();
+
+  //Read the session written by Login, if nobody is logged in null
+  const savedUser = localStorage.getItem("currentUser");
+  const currentUser = savedUser ? JSON.parse(savedUser) : null;
+
+  //Load this user's tasks once 
+  // tasksByUser maps each user's email to their task list
+  const [tasks, setTasks] = useState(() => {
+    if (!currentUser) return [];
+
+    const saved = localStorage.getItem("tasksByUser");
+    const tasksByUser = saved ? JSON.parse(saved) : {};
+
+    const userTasks = tasksByUser[currentUser.email] || [];
+
+    //Restore createdAt to a Date object because JSON stores it as a string
+    return userTasks.map((t) => ({
+      ...t,
+      createdAt: new Date(t.createdAt),
+    }));
+  });
+
+//Route protection: redirect to login if nobody is logged in 
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/");
+    }
+  }, [currentUser, navigate]);
 
   //Controlled input states for new task title and description, and error message
   //Error message shown when the user tries to add a task without a title
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [error, setError] = useState("");
+
+
+  //Save tasks on every change: read the shared map, update only thiw user's entry, write it back 
+  useEffect(() => {
+    if (!currentUser) return;
+
+    const saved = localStorage.getItem("tasksByUser");
+    const tasksByUser = saved ? JSON.parse(saved) : {};
+
+    tasksByUser[currentUser.email] = tasks;
+
+    localStorage.setItem("tasksByUser", JSON.stringify(tasksByUser));
+  }, [tasks, currentUser]);
 
   //Runs on every change in the title input field, updates the newTitle state and clears any error message
   function handleTitleChange(event) {
@@ -37,6 +61,12 @@ function ToDoList() {
   //Runs on every change in the description input field, updates the newDescription state
   function handleDescriptionChange(event) {
     setNewDescription(event.target.value);
+  }
+
+  //Logout: remove only the session
+  function handleLogout() {
+    localStorage.removeItem("currentUser");
+    navigate("/");
   }
 
   //Adds a new task to the tasks array if the title is not empty, otherwise sets an error message
@@ -103,10 +133,16 @@ function ToDoList() {
   const completedTasks = sortedTasks.filter((t) => t.completed);
   const pendingTasks = sortedTasks.filter((t) => !t.completed);
 
+  //Render nothing while there is no user
+  if (!currentUser) {
+    return null;
+  }
+
   return (
     <>
+      <h1>Welcome {currentUser.username}!</h1>
       <div className="todo-list">
-        <h1>Today's Tasks</h1>
+        <h2>Today's Tasks</h2>
         <div className="date">
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
@@ -137,15 +173,15 @@ function ToDoList() {
         {/* Conditional rendering: if error is not empty, display the error message
         in a paragraph with class "error" */}
         {error && <p className="error">{error}</p>}
-        <h2 className="task-section-title">Pending ({pendingTasks.length})</h2>
+        <h3 className="task-section-title">Pending ({pendingTasks.length})</h3>
         {pendingTasks.length > 0 ? (
           <ol>{pendingTasks.map(renderTask)}</ol>
         ) : (
           <p>No pending tasks.</p>
         )}
-        <h2 className="task-section-title">
+        <h3 className="task-section-title">
           Completed ({completedTasks.length})
-        </h2>
+        </h3>
         {completedTasks.length > 0 ? (
           <ol>{completedTasks.map(renderTask)}</ol>
         ) : (
@@ -159,10 +195,7 @@ function ToDoList() {
         </button>
       </div>
       <div>
-        <button
-          className="logout-button"
-          onClick={() => (window.location.href = "/")}
-        >
+        <button className="logout-button" onClick={() => handleLogout()}>
           Logout
         </button>
       </div>
