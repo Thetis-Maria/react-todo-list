@@ -55,8 +55,8 @@ Forms are implemented as controlled components with validation (required fields,
 
 ```bash
 # Clone the repository
-git clone https://github/Thetis-Maria/<react-todo-list>.git
-cd <react-todo-list>
+git clone https://github.com/Thetis-Maria/react-todo-list.git
+cd react-todo-list
 
 # Install dependencies
 npm install
