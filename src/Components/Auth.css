@@ -24,7 +24,7 @@
 /* Input field for email and password */
 .input-group input[type="email"],
 .input-group input[type="password"],
-.input-group input[type="username"] {
+.input-group input[type="text"] {
   padding: 12px 48px;
   font-size: 15px;
   text-align: left;
@@ -39,7 +39,7 @@
 
 .input-group input[type="email"]:focus,
 .input-group input[type="password"]:focus,
-.input-group input[type="username"]:focus {
+.input-group input[type="text"]:focus {
   border-color: #4c6ef5;
   box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.15);
 }

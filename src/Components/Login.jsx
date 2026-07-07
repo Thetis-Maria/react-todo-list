@@ -105,7 +105,7 @@ function Login() {
 
         {/*Login button, triggers validation & authentication */}
         <button
-          type="submit"
+          type="button"
           className="auth-button"
           onClick={() => handleLogin()}
         >

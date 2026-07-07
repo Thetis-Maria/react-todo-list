@@ -108,7 +108,7 @@ function SignUp() {
 
         <div className="input-group">
           <input
-            type="username"
+            type="text"
             placeholder="Username"
             value={newUsername}
             onChange={handleUsernameChange}
