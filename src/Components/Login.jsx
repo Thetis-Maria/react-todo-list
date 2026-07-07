@@ -3,30 +3,27 @@ import "./Auth.css";
 import React, { useState } from "react";
 
 function Login() {
-  //Load registered users, same users key that SignUp writes to 
+  //Load registered users, same users key that SignUp writes to
   const [users] = useState(() => {
     const saved = localStorage.getItem("users");
     const users = saved ? JSON.parse(saved) : [];
     return users;
   });
 
-  //Controlled input states: they hold whatever the user types
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
   //Feedback messages shown to the user
-  const [error, setError] = useState(""); //validation/login errors
-  const [success, setSuccess] = useState(""); //success message
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  //Hook that lets us navigate to another route
   const navigate = useNavigate();
 
-  //Updates the email state on evry keystroke in the email input
+  //Updates the email state on every keystroke in the email input
   function handleEmailChange(event) {
     setNewEmail(event.target.value);
   }
 
-  //Updates the password state on every keystroke in the password input
   function handlePasswordChange(event) {
     setNewPassword(event.target.value);
   }
@@ -43,7 +40,6 @@ function Login() {
       setError("Please enter a password.");
       return;
     }
-    //Clear any previous error once validation passes
     setError("");
 
     // Authentication
@@ -55,11 +51,10 @@ function Login() {
     );
 
     if (foundUser) {
-      //Credentials are correct
       setError("");
       setSuccess("Account logged in successfully!");
 
-      //Save the session: ToDoList reads this to know who is logged in 
+      //Save the session: ToDoList reads this to know who is logged in
       localStorage.setItem(
         "currentUser",
         JSON.stringify({
@@ -72,15 +67,13 @@ function Login() {
         navigate("/todo");
       }, 2000);
     } else {
-      ///No matching user found, show error
       setSuccess("");
       setError("Invalid email or password");
     }
   }
 
   return (
-    <div className="login-page">
-      {/*Success message shown, only when success is not empty*/}
+    <div className="auth-page">
       {success && <p className="success">{success}</p>}
 
       {/*Card containing the login form*/}
@@ -108,7 +101,6 @@ function Login() {
           />
         </div>
 
-        {/*Error message shown, only when error is not empty*/}
         {error && <p className="error">{error}</p>}
 
         {/*Login button, triggers validation & authentication */}

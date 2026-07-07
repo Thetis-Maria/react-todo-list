@@ -12,7 +12,7 @@
 h1 {
   font-size: 60px;
   text-align: center;
-  color: hsl(0, 7%, 94%)
+  color: hsl(0, 7%, 94%);
 }
 
 .date {
@@ -47,8 +47,7 @@ h1 {
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  background: #f7f8fc;
-  border: 1px solid #eceef6;
+  border: 1px solid #ecedef;
   border-radius: 12px;
   transition: box-shadow 0.2s;
 }
@@ -96,12 +95,12 @@ h1 {
 .add-button {
   padding: 12px 14px;
   margin-left: 10px;
-  background-color:#5987f2;
+  background-color: #5987f2;
   color: white;
   transition: box-shadow 0.2s;
 }
 .add-button:hover {
-  background-color:#336df4;
+  background-color: #336df4;
   box-shadow: 0 8px 32px rgba(76, 110, 245, 0.5);
 }
 
@@ -118,7 +117,7 @@ h1 {
 
 .checkbox-button.pending {
   border: 2px solid red;
-  background-color: #ffe3e3; 
+  background-color: #ffe3e3;
 }
 
 .checkbox-button.completed {
@@ -154,8 +153,15 @@ h1 {
 /*pending and completed task section titles*/
 .task-section-title {
   font-size: 20px;
+  color: #6b6c6d;
+  padding: 10px 20px;
+  border-radius: 10px;
   margin-top: 30px;
   margin-bottom: 10px;
+  cursor: pointer;
+  user-select: none;
+  background-color: #ebedf4;
+  box-shadow: 0 8px 32px rgba(136, 159, 253, 0.5);
 }
 
 .clear-completed-button {
@@ -174,8 +180,10 @@ h1 {
 }
 
 .logout-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
   padding: 14px 20px;
-  margin-left: 10px;
   background-color: #5987f2;
   color: white;
   transition: box-shadow 0.2s;

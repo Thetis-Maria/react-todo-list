@@ -3,7 +3,6 @@ import "./Auth.css";
 import React, { useState } from "react";
 
 function SignUp() {
-
   //Load registered users from localStorage or empty list on first visit
   const [users, setUsers] = useState(() => {
     const saved = localStorage.getItem("users");
@@ -72,12 +71,10 @@ function SignUp() {
     }
 
     if (foundUser) {
-      //Return and error show when user already exists
       setError("User already exists. Please login.");
       return;
     }
 
-    //All checks passed- account is created
     setError("");
     const newUser = {
       username: newUsername,
@@ -88,15 +85,12 @@ function SignUp() {
     //Save the full updated list back to localStorage
     localStorage.setItem("users", JSON.stringify([...users, newUser]));
 
-    //Success message
     setSuccess("Account created successfully! Redirecting to login...");
 
-    //Clear the input fields
     setNewUsername("");
     setNewEmail("");
     setNewPassword("");
 
-    //After 2 sec navigate to login
     setTimeout(() => {
       navigate("/login");
     }, 2000);
@@ -104,7 +98,6 @@ function SignUp() {
 
   return (
     <div className="auth-page">
-      {/*Success message*/}
       {success && <p className="success">{success}</p>}
 
       {/*Card containing the sign up form*/}
@@ -113,7 +106,6 @@ function SignUp() {
           <h2 className="signup-title">Sign Up</h2>
         </div>
 
-        {/*Username input */}
         <div className="input-group">
           <input
             type="username"
@@ -123,7 +115,6 @@ function SignUp() {
           />
         </div>
 
-        {/*Email input */}
         <div className="input-group">
           <input
             type="email"
@@ -133,7 +124,6 @@ function SignUp() {
           />
         </div>
 
-        {/*Password input */}
         <div className="input-group">
           <input
             type="password"
@@ -143,7 +133,6 @@ function SignUp() {
           />
         </div>
 
-        {/*Error message */}
         {error && <p className="error">{error}</p>}
 
         {/*Sign Up button, triggers validation and account creation */}
