@@ -25,7 +25,7 @@ Forms are implemented as controlled components with validation (required fields,
 
 ### Sign Up
 
-![Sign up page with validation](screenshots/signup.png)
+![Sign up page with validation](screenshots/signUp.png)
 
 ### Login
 
